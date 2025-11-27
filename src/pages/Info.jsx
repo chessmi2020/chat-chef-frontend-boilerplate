@@ -9,13 +9,34 @@ const Info = () => {
   // logic
 
   // TODO: set함수 추가하기
-  const [ingredientList] = useState([]); // 사용자가 입력할 재료 목록
+  const [ingredientList, setIngredientList] = useState([]); // 사용자가 입력할 재료 목록
 
   const addIngredient = () => {
-    console.log("재료 추가하기");
+    //console.log("재료 추가하기");
+    // 기본 데이터 추가
+    const id = Date.now();
+    const newItem = {
+      // 객체 추가시 고유한 ID값 필요
+      id: id, //키값과 밸류값 같으면 축약 가능 =>id: id
+      label: `ingredient_${id}`,
+      text: "재료명", //ui에 볼여줄 타이틀
+      value: "",
+    };
+
+    //기존 배렬에 객체 추가
+    setIngredientList([...ingredientList, newItem]);
   };
 
   const history = useNavigate();
+
+  const handleRemove = (selectedId) => {
+    console.log("🚀 ~ handleRemove ~ sekectedUd:", selectedId);
+    const filterIngredientList = ingredientList.filter(
+      (item) => item.id !== selectedId
+    );
+    setIngredientList(filterIngredientList);
+  };
+
   const handleNext = () => {
     // console.log("chat페이지로 이동");
     history("/chat");
@@ -43,7 +64,11 @@ const Info = () => {
             {/* START:input 영역 */}
             <div>
               {ingredientList.map((item) => (
-                <InfoInput key={item.id} content={item} />
+                <InfoInput
+                  key={item.id}
+                  content={item}
+                  onRemove={handleRemove}
+                />
               ))}
             </div>
             {/* END:input 영역 */}

@@ -1,12 +1,13 @@
 import React from "react";
 import { FaRegTrashAlt } from "react-icons/fa";
 
-const InfoInput = ({ content }) => {
+const InfoInput = ({ content, onRemove }) => {
   // logic
-  const { label, text } = content;
+  const { id, label, text } = content;
 
-  const onRemove = () => {
-    console.log("재료 삭제하기");
+  const handleRemove = () => {
+    // console.log("재료 삭제하기");
+    onRemove(id);
   };
 
   // view
@@ -32,7 +33,7 @@ const InfoInput = ({ content }) => {
         <button
           type="button"
           className="absolute right-3 inset-y-0 flex items-center px-1"
-          onClick={onRemove}
+          onClick={handleRemove}
         >
           <FaRegTrashAlt />
         </button>
